@@ -1,16 +1,16 @@
-Shoes.app do
+Shoes.app title: "TinyNotes" do
 	background "#364f6b"
 	border("#f5f5f5", strokewidth: 6)
 
-	stack(margin: 12) do
-		para "Type your note:", stroke: "#f5f5f5", family: "monaco"
+	stack(margin: 12, margin_right: 0) do
+		para "TinyNotes", stroke: "#f5f5f5", family: "monaco"
 		flow do
-			@title = edit_line "Title", width: "500px"
+			@title = edit_line "Name of file to save to", width: 0.95
 		end
 	end
 	stack(margin_left: 12) do
 		flow do
-			@note = edit_box "Type...", width: "500px"
+			@note = edit_box "Type your note...", width: 0.95, height: 275
 		end
 	end
 	stack(margin: 12) do
@@ -19,7 +19,7 @@ Shoes.app do
 			@clear = button "Clear all"
 			@quit = button "Quit"
 			@save.click do
-				file = File.open("#{@title.text()}.txt", "a+")
+				file = File.open("#{@title.text().downcase}.txt", "a+")
 				et = Time.now
 				file.write("#{et.strftime("[%m/%d/%y]  %I:%M:%S %p")} - #{@note.text()}\n")
 				file.close
